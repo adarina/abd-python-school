@@ -16,12 +16,14 @@ app.config.from_object("app.config.Config")
 db.init_app(app)
 
 
-from .controllers.index import index
+# from .controllers.index import index
+from .controllers.login import login
 from .controllers.add import add
-from .controllers.apple import apple
-app.register_blueprint(index, url_prefix="/")
+# from .controllers.apple import apple
+# app.register_blueprint(index, url_prefix="/")
+app.register_blueprint(login, url_prefix="/")
 app.register_blueprint(add, url_prefix="/add")
-app.register_blueprint(apple, url_prefix="/apple")
+# app.register_blueprint(apple, url_prefix="/apple")
 #migrate = Migrate(app, db)
 
 '''
