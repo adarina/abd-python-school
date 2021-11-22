@@ -13,30 +13,38 @@
 
 </head>
 <body>
+    
     <div class="container">
         <div class="mx-auto col-sm-8 main-section" id="myTab" role="tablist">
             <ul class="nav nav-tabs justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link active" id="list-tab" data-toggle="tab" href="{{ url_for('login.landing') }}" role="tab" aria-controls="list" aria-selected="false">List</a>
+                    <a class="nav-link" id="list-tab" data-toggle="tab" href="{{ url_for('login.landing') }}" role="tab" aria-controls="list" aria-selected="false">List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="form-tab" data-toggle="tab" href="{{ url_for('add.add_user') }}"  role="tab" aria-controls="form" aria-selected="true">Add</a>				   	
+                    <a class="nav-link active" id="form-tab" data-toggle="tab" href="{{ url_for('add.add_user') }}"  role="tab" aria-controls="form" aria-selected="true">Add</a>				   	
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="form-tab" data-toggle="tab" href="{{ url_for('log.log_in') }}"  role="tab" aria-controls="form" aria-selected="false">Login</a>				   	
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add an apple entry</h4>
+                            <h4>Add teacher</h4>
                         </div>
                         <div class="card-body">
                             {% if success %}
                             <div class="alert alert-success" role="alert">
-                                New apple added to database!
+                                New teacher added to database!
                             </div>
                             {% endif %}
                             <div class="card-body">
                                 <form method="POST">
+                                    <div class="form-group">
+                                        <label for="userLogin">Login</label>
+                                        <input type="text" class="form-control" id="userLogin" name="userLogin">
+                                    </div>
                                     <div class="form-group">
                                         <label for="userName">Name</label>
                                         <input type="text" class="form-control" id="userName" name="userName">
@@ -48,6 +56,52 @@
                                     <div class="form-group">
                                         <label for="userPassword">Password</label>
                                         <input type="text" class="form-control" id="userPassword" name="userPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="teacherRoom">Room</label>
+                                        <input type="text" class="form-control" id="teacherRoom" name="teacherRoom">
+                                    </div>
+                                    <br/>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Add pupil</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if success %}
+                            <div class="alert alert-success" role="alert">
+                                New pupil added to database!
+                            </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <form method="POST">
+                                    <div class="form-group">
+                                        <label for="userLogin">Login</label>
+                                        <input type="text" class="form-control" id="userLogin" name="userLogin">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userName">Name</label>
+                                        <input type="text" class="form-control" id="userName" name="userName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userSurname">Surname</label>
+                                        <input type="text" class="form-control" id="userSurname" name="userSurname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userPassword">Password</label>
+                                        <input type="text" class="form-control" id="userPassword" name="userPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pupilBirthDate">Birth Date</label>
+                                        <input type="text" class="form-control" id="pupilBirthDate" name="pupilBirthDate">
                                     </div>
                                     <br/>
                                     <button type="submit" class="btn btn-primary">Submit</button>
