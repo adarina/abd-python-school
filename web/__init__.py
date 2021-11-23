@@ -20,11 +20,15 @@ db.init_app(app)
 from .controllers.login import login
 from .controllers.add import add
 from .controllers.log import log
+from .controllers.grade import grade
+from .controllers.grading import grading
 # from .controllers.apple import apple
 # app.register_blueprint(index, url_prefix="/")
 app.register_blueprint(login, url_prefix="/")
 app.register_blueprint(add, url_prefix="/add")
 app.register_blueprint(log, url_prefix="/log")
+app.register_blueprint(grade, url_prefix="/grade")
+app.register_blueprint(grading, url_prefix="/grading")
 # app.register_blueprint(apple, url_prefix="/apple")
 #migrate = Migrate(app, db)
 

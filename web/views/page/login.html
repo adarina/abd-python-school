@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>User Gallery</title>
-    <!-- Bootstrap -->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- FontAwesome Icons-->
+  
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 
 </head>
 <body>
@@ -55,7 +56,7 @@
                                     {% endfor %}
                                     </tbody>
                                 </table> -->
-                                <table id="teacherList" class="table table-bordered table-hover table-striped">
+                                <!-- <table id="teacherList" class="table table-bordered table-hover table-striped">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">Id</th>
@@ -83,4 +84,49 @@
         </div>
     </div>
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ABD_App</title>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/Navigation-with-Button.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-button shadow-lg" style="background: var(--bs-blue);">
+        <div class="container"><a class="navbar-brand" href="#" style="font-size: 32px;color: rgb(255, 206, 103);">Tilia&nbsp;<i class="fas fa-leaf"></i></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">News</a></li>
+                    <li class="nav-item"></li>
+                </ul><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#">Log In</a></span>
+            </div>
+        </div>
+    </nav>
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col">
+                <section class="login-clean rounded-3">
+                    <form class="shadow-lg" method="post">
+                        <h2 class="visually-hidden">Login Form</h2>
+                        <div class="illustration"><i class="fas fa-leaf"></i></div>
+                        <div class="mb-3"><input class="form-control" type="userLogin" name="userLogin" placeholder="Login"></div>
+                        <div class="mb-3"><input class="form-control" type="userPassword" name="userPassword" placeholder="Password"></div>
+                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Log In</button></div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
 </html>
