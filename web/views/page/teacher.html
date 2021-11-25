@@ -20,7 +20,7 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="#">News</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Control Panel</a></li>
-                </ul><span class="navbar-text text-white">Logged as:</span><strong class="m-3" style="color: rgb(255,206,103);">Teacher&nbsp;<i class="fas fa-chalkboard-teacher"></i>&nbsp;</strong><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#">Log Out</a></span>
+                </ul><span class="navbar-text text-white">Logged as:</span><strong class="m-3" style="color: rgb(255,206,103);">Teacher&nbsp;<i class="fas fa-chalkboard-teacher"></i>&nbsp;</strong><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="{{ url_for('teacher.log_out') }}">Log Out</a></span>
             </div>
         </div>
     </nav>
@@ -31,10 +31,10 @@
                     <h2 class="px-3 pt-3" style="margin: 0;"><i class="far fa-list-alt"></i>&nbsp;Sidebar</h2>
                     <hr style="height: 2px;">
                     <ul class="list-group mb-3">
-                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary active w-100 text-start" type="button"><i class="far fa-eye"></i>&nbsp;Overview</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Lectures</button></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('teacher.landing') }}"><button class="btn btn-outline-secondary active w-100 text-start" type="button"><i class="far fa-eye"></i>&nbsp;Overview</button></a></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('lectures.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Lectures</button></a></li>
                         <li class="list-group-item border-0"><a href="{{ url_for('grading.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-edit"></i>&nbsp;Grading</button></a></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-users"></i>&nbsp;Classes</button></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('classes.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-users"></i>&nbsp;Classes</button></a></li>
                     </ul>
                 </div>
             </div>

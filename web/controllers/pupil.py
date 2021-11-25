@@ -5,19 +5,19 @@ from app.models.models import Teacher, User, Pupil, db
 from flask import Flask, render_template, redirect, request, session
 # from flask_session import Session
 
-teacher = Blueprint('teacher', __name__)
+pupil = Blueprint('pupil', __name__)
 
 # @login.route('/', methods=['GET'])
 # def landingl():
 #     users = db.session.query(User).all()
 #     return render_template('login.html', users=users)
 
-@teacher.route('/', methods=['GET'])
+@pupil.route('/', methods=['GET'])
 def landing():
-    teachers = db.session.query(Teacher).all()
-    return render_template('teacher.html', teachers=teachers)
+    teachers = db.session.query(Pupil).all()
+    return render_template('pupil.html', teachers=teachers)
 
-@teacher.route('/', methods=['GET', 'POST'])
+@pupil.route('/', methods=['GET', 'POST'])
 def log_out(success=False):
     session["name"] = None
     return render_template('login.html', success=success)      

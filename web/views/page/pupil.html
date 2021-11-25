@@ -31,10 +31,10 @@
                     <h2 class="px-3 pt-3" style="margin: 0;"><i class="far fa-list-alt"></i>&nbsp;Sidebar</h2>
                     <hr style="height: 2px;">
                     <ul class="list-group mb-3">
-                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary active w-100 text-start" type="button"><i class="far fa-eye"></i>&nbsp;Overview</button></li>
-                        <li class="list-group-item border-0"><a href="{{ url_for('grade.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="far fa-calendar-alt"></i>&nbsp;Attendance</button></a></li>
-                        <li class="list-group-item border-0"><a href="{{ url_for('grade.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-edit"></i>&nbsp;Grades</button></li></a></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-tachometer-alt"></i>&nbsp;Your performance</button></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('pupil.landing') }}"><button class="btn btn-outline-secondary active w-100 text-start" type="button"><i class="far fa-eye"></i>&nbsp;Overview</button></a></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('attendance.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="far fa-calendar-alt"></i>&nbsp;Attendance</button></a></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('grades.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-edit"></i>&nbsp;Grades</button></a></li>
+                        <li class="list-group-item border-0"><a href="{{ url_for('your_performance.landing') }}"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-tachometer-alt"></i>&nbsp;Your performance</button></a></li>
                     </ul>
                 </div>
             </div>

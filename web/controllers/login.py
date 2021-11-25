@@ -1,6 +1,9 @@
-from flask import request, Blueprint, render_template, redirect
+from flask import request, Blueprint, render_template, redirect, sessions
 from flask.helpers import make_response, url_for
-from app.models.Teacher import Teacher, User, Pupil, db
+from flask_sqlalchemy import _SessionSignalEvents
+from app.models.models import Teacher, User, Pupil, db
+from flask import Flask, render_template, redirect, request, session
+# from flask_session import Session
 
 login = Blueprint('login', __name__)
 
@@ -8,6 +11,7 @@ login = Blueprint('login', __name__)
 # def landingl():
 #     users = db.session.query(User).all()
 #     return render_template('login.html', users=users)
+
 
 @login.route('/', methods=['GET'])
 def landing():
@@ -33,6 +37,8 @@ def log_in(success=False):
                 
                 if (teacher_id != None):
                     if(user_id[0] == teacher_id[0]):
+                        session["name"] = request.form.get("userLogin")
+                        print(session["name"])
                         return render_template('teacher.html', success=success)
                 if (pupil_id != None):
                     if(user_id[0] == pupil_id[0]):
