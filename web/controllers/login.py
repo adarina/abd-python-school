@@ -3,14 +3,8 @@ from flask.helpers import make_response, url_for
 from flask_sqlalchemy import _SessionSignalEvents
 from app.models.models import Teacher, User, Pupil, db
 from flask import Flask, render_template, redirect, request, session
-# from flask_session import Session
 
 login = Blueprint('login', __name__)
-
-# @login.route('/', methods=['GET'])
-# def landingl():
-#     users = db.session.query(User).all()
-#     return render_template('login.html', users=users)
 
 
 @login.route('/', methods=['GET'])

@@ -44,7 +44,7 @@ def add_user(success=False):
             # db.session.update(Class).where(Class.id == class_id).values(pupilCount = pupil_count + 1)
             db.session.commit()
 
-            listOfGrades = ListOfGrades('Chemistry',0 , user.id)
+            listOfGrades = ListOfGrades('C',0 , user.id)
             db.session.add(listOfGrades)
             db.session.commit()
 
@@ -52,21 +52,6 @@ def add_user(success=False):
             db.session.add(listOfGrades)
             db.session.commit()
 
-            # grade = Grade(1, "lol", "lol2", 2,3,9)
-            # db.session.add(grade)
-            # db.session.commit()
-
         return make_response(redirect(url_for('register.add_user', success=True)))
     else:
         return render_template('register.html', success=success)
-
-
-#  id = db.Column(db.Integer, primary_key=True)
-#     date = db.Column(db.Integer, nullable=False)
-#     evaluated = db.Column(db.Pupil, nullable=False)
-#     description = db.Column(db.String(128), nullable=False)
-#     subject = db.Column(db.String(128), nullable=False)
-#     grade = db.Column(db.Integer, nullable=False)
-#     weight = db.Column(db.Integer, nullable=False)
-#     teacher_id = db.Column(db.ForeignKey('teacher.user_id'))
-#     user = db.relationship('Teacher')
