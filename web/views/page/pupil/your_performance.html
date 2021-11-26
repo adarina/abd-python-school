@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ABD_App</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap">
+    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="../static/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-button shadow-lg" style="background: var(--bs-blue);">
+        <div class="container"><a class="navbar-brand" href="#" style="font-size: 32px;color: rgb(255, 206, 103);">Tilia&nbsp;<i class="fas fa-leaf"></i></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Control Panel</a></li>
+                </ul><span class="navbar-text text-white">Logged as:</span><strong class="m-3" style="color: rgb(255,206,103);">Pupil&nbsp;<i class="fas fa-user-graduate"></i>&nbsp;</strong><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#">Log Out</a></span>
+            </div>
+        </div>
+    </nav>
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-md-4">
+                <div class="d-flex flex-column shadow-lg rounded-3 my-4">
+                    <h2 class="px-3 pt-3" style="margin: 0;"><i class="far fa-list-alt"></i>&nbsp;Sidebar</h2>
+                    <hr style="height: 2px;">
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="far fa-eye"></i>&nbsp;Overview</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="far fa-calendar-alt"></i>&nbsp;Attendance</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary active w-100 text-start" type="button"><i class="fas fa-edit"></i>&nbsp;Grades</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-secondary w-100 text-start" type="button"><i class="fas fa-tachometer-alt"></i>&nbsp;Your performance</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="d-flex flex-column shadow-lg rounded-3 my-4">
+                    <h2 class="px-3 pt-3" style="margin: 0;">&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;Grades</h2>
+                    <hr style="height: 2px;">
+                    <div class="row px-1 mb-4">
+                        <div class="col-12">
+                            <p class="text-center px-3 overview-secondary m-0"><strong>Week</strong> 11.10.2021 - 17.10.2021</p>
+                        </div>
+                        <div class="col-1 d-flex justify-content-center align-items-xl-center"><i class="far fa-arrow-alt-circle-left justify-content-center align-items-center text-black-50" style="font-size: 32px;"></i></div>
+                        <div class="col">
+                            <div class="row row-cols-3">
+                                <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;15.10.2021</p>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center flex-column flex-grow-1">
+                                        <div class="col d-flex flex-column justify-content-center"><i class="fas fa-check text-success" style="font-size: 60px;"></i>
+                                            <p class="text-center p-1 m-0 text-success"><strong>All lessons attended</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;Today</p>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col d-flex flex-column justify-content-center"><i class="fas fa-question text-warning" style="font-size: 60px;"></i>
+                                            <p class="text-center p-1 m-0 text-warning"><strong>Absent from lessons:</strong></p>
+                                            <p class="text-center p-1 m-0"><i class="fas fa-clock" style="width: 18.003px;"></i>&nbsp;8:00 - 8:45 | History</p>
+                                            <p class="text-center p-1 m-0">Consult your teacher <br>to resolve this issue</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="gradeList" class="table table-bordered table-hover table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Average</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Pupil</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for grade in grades %}
+                            <tr>
+                                <th scope="row"><a href="{{ url_for('your_performance.landing', grade_id=grade.id) }}">{{ grade.id }}</a></th>
+                                <td>{{ grade.average }}</td>
+                                <td>{{ grade.name }}</td>
+                                <td>{{ grade.pupil_id }}</td>
+                            </tr>
+                            {% else %}
+                                <h2>No entries yet. Add some!</h2>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="col-1 d-flex justify-content-center align-items-xl-center"><i class="far fa-arrow-alt-circle-right justify-content-center align-items-center" style="font-size: 32px;color: rgba(136,136,136,0.36);"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

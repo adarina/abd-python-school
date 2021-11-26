@@ -49,11 +49,12 @@ class Grade(db.Model):
     evaluated = db.Column(db.ForeignKey('pupil.user_id'))
     pupil = db.relationship('Pupil')
     description = db.Column(db.String(128), nullable=False)
-    subject = db.Column(db.String(128), nullable=False)
+    subject = db.Column(db.ForeignKey('listofgrades.id'))
     grade = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     teacher_id = db.Column(db.ForeignKey('teacher.user_id'))
     teacher = db.relationship('Teacher')
+    listofgrades = db.relationship('ListOfGrades')
 
     def __init__(self, date, evaluated, description, subject, grade, weight, teacher_id):
         self.date = date
@@ -96,10 +97,12 @@ class ListOfGrades(db.Model):
     __tablename__ = "listofgrades"
 
     id = db.Column(db.Integer, primary_key=True)
-    average = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(128), nullable=False)
+    average = db.Column(db.Numeric(asdecimal=False), nullable=False)
     pupil_id = db.Column(db.ForeignKey('pupil.user_id'))
     pupil = db.relationship('Pupil')
 
-    def __init__(self, average, pupil_id):
+    def __init__(self, name, average, pupil_id):
+        self.name = name
         self.average = average
         self.pupil_id = pupil_id

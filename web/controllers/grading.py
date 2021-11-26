@@ -1,13 +1,17 @@
 from flask import request, Blueprint, render_template, redirect, session
 from flask.helpers import make_response, url_for
-from app.models.models import User, Grade, db
+from app.models.models import User, Grade, ListOfGrades, db
+from sqlalchemy.sql import func
+from decimal import Decimal
 
 grading = Blueprint('grading', __name__)
+
 
 @grading.route('/', methods=['GET'])
 def landing():
     gradings = db.session.query(Grade).all()
     return render_template('teacher/grading.html', gradings=gradings)
+
 
 @grading.route('/', methods=['GET', 'POST'])
 def add_grade(success=False):
@@ -19,12 +23,28 @@ def add_grade(success=False):
         gradeGrade = request.form.get("gradeGrade")
         gradeWeight = request.form.get("gradeWeight")
 
-        teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
+        pupil_id = db.session.query(User.id).filter(
+            User.login == gradePupil).first()
+        gradelist_id = db.session.query(ListOfGrades.id).filter(
+            ListOfGrades.name == gradeSubject).first()
+        teacher_id = db.session.query(User.id).filter(
+            User.login == session["name"]).first()
 
-        grade = Grade(gradeDate, gradePupil, gradeDescription, gradeSubject, gradeGrade, gradeWeight, teacher_id[0])
+        grade = Grade(gradeDate, pupil_id[0], gradeDescription,
+                      gradelist_id[0], gradeGrade, gradeWeight, teacher_id[0])
         db.session.add(grade)
         db.session.commit()
 
+        average = db.session.query(func.avg(Grade.grade * Grade.weight)
+                                   .label('average'))\
+            .filter(Grade.subject == gradelist_id[0])\
+            .filter(Grade.evaluated == pupil_id[0]).scalar()
+        db.session.query(ListOfGrades)\
+            .filter(ListOfGrades.name == gradeSubject)\
+            .filter(ListOfGrades.pupil_id == pupil_id[0])\
+            .update({ListOfGrades.average: average})
+
+        db.session.commit()
         return make_response(redirect(url_for('grading.add_grade', success=True)))
     else:
         return render_template('grading.html', success=success)

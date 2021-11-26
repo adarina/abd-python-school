@@ -42,6 +42,8 @@ def log_in(success=False):
                         return render_template('teacher.html', success=success)
                 if (pupil_id != None):
                     if(user_id[0] == pupil_id[0]):
+                        session["name"] = request.form.get("userLogin")
+                        print(session["name"])
                         return render_template('pupil.html', success=success)
                 else: 
                     return render_template('login.html', success=success)

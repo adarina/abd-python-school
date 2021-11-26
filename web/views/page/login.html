@@ -20,7 +20,9 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="#">News</a></li>
                     <li class="nav-item"></li>
-                </ul><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#">Log In</a></span>
+                </ul>
+                <span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="{{ url_for('register.add_user') }}">Register</a></span>
+                <span style="padding-left:10px" class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="{{ url_for('login.log_in') }}">Log In</a></span>
             </div>
         </div>
     </nav>
@@ -41,4 +43,5 @@
     </div>
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>
