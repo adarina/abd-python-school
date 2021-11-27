@@ -1,7 +1,6 @@
 from flask import request, Blueprint, render_template, redirect
 from flask.helpers import make_response, url_for
 from app.models.models import Teacher, User, Pupil, Grade, Class, ListOfGrades, db
-# from web.models.models import ListOfGrades
 
 register = Blueprint('register', __name__)
 
@@ -24,15 +23,14 @@ def add_user(success=False):
             db.session.commit()
             db.session.add(Teacher(user.id, teacherRoom))
             db.session.commit()
-            # db.session.add(Grade(1, "lol", "lol2", 2,3,user.id))
-            # db.session.commit()
+            
         elif (pupilBirthDate != None):
             db.session.commit()
             _class = Class('2B', 0)
             db.session.add(_class)
             db.session.commit()
             class_id = db.session.query(Class.id).filter(Class.name == '2B').first()
-            # pupil_count = db.session.query(Class.pupilCount).filter(Class.name == '2B').first()
+            
 
             print(class_id[0])
             print(user.id)
@@ -41,7 +39,7 @@ def add_user(success=False):
             a_class = db.session.query(Class).filter(Class.name == '2B').first()
             a_class.pupilCount += 1
 
-            # db.session.update(Class).where(Class.id == class_id).values(pupilCount = pupil_count + 1)
+           
             db.session.commit()
 
             listOfGrades = ListOfGrades('C',0 , user.id)

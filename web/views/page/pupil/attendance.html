@@ -20,7 +20,7 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="#">News</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Control Panel</a></li>
-                </ul><span class="navbar-text text-white">Logged as:</span><strong class="m-3" style="color: rgb(255,206,103);">Pupil&nbsp;<i class="fas fa-user-graduate"></i>&nbsp;</strong><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#">Log Out</a></span>
+                </ul><span class="navbar-text text-white">Logged as:</span><strong class="m-3" style="color: rgb(255,206,103);">Pupil&nbsp;<i class="fas fa-user-graduate"></i>&nbsp;</strong><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="{{ url_for('login.log_out') }}">Log Out</a></span>
             </div>
         </div>
     </nav>
@@ -83,6 +83,6 @@
             </div>
         </div>
     </div>
-    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

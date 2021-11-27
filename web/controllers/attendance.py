@@ -6,4 +6,5 @@ attendance = Blueprint('attendance', __name__)
 
 @attendance.route('/', methods=['GET'])
 def landing():
+    # TO DO
     return render_template('pupil/attendance.html')
