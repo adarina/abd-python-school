@@ -14,6 +14,7 @@ def add_lecture(success=False):
     if request.method == 'POST':
         lectureDate = request.form.get("lectureDate")
         lectureTopic = request.form.get("lectureTopic")
+        lectureClass = request.form.get("lectureClass")
     
         teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
         class_id = db.session.query(Class.id).filter(Class.name == '2B').first()
