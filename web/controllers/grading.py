@@ -2,7 +2,6 @@ from flask import request, Blueprint, render_template, redirect, session
 from flask.helpers import make_response, url_for
 from app.models.models import User, Grade, ListOfGrades, db
 from sqlalchemy.sql import func
-from decimal import Decimal
 
 grading = Blueprint('grading', __name__)
 

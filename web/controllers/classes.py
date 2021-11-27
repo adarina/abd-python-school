@@ -1,6 +1,4 @@
-from flask import request, Blueprint, render_template, redirect
-from flask.helpers import make_response, url_for
-from app.models.models import Teacher, User, Pupil, db
+from flask import Blueprint, render_template
 
 classes = Blueprint('classes', __name__)
 
