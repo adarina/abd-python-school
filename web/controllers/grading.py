@@ -1,6 +1,6 @@
 from flask import request, Blueprint, render_template, redirect, session
 from flask.helpers import make_response, url_for
-from app.models.models import User, Grade, ListOfGrades, db
+from app.models.models import User, Grade, ListOfGrades, Pupil, db
 from sqlalchemy.sql import func
 
 grading = Blueprint('grading', __name__)
@@ -8,7 +8,13 @@ grading = Blueprint('grading', __name__)
 
 @grading.route('/', methods=['GET'])
 def landing():
-    gradings = db.session.query(Grade).all()
+    teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
+    gradings = db.session.query(Pupil, User, Grade, ListOfGrades)\
+        .filter(Grade.teacher_id == teacher_id[0])\
+        .filter(Pupil.user_id == User.id)\
+            .filter(Grade.evaluated == Pupil.user_id)\
+                .filter(ListOfGrades.id == Grade.subject).all()
+
     return render_template('teacher/grading.html', gradings=gradings)
 
 
