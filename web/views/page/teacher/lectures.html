@@ -60,7 +60,7 @@
                     <h2 class="px-3 pt-3" style="margin: 0;">&nbsp;<i class="fas fa-chalkboard-teacher"></i>&nbsp;Lectures</h2>
                     <hr style="height: 2px;">
                     <div class="row px-1">
-                        {% for lecture in lectures %}
+                        {% for lecture, class in lectures %}
                         <div class="col-3 m-4 p-1 shadow rounded-3">
                             <div class="row">
                                 <div class="col">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-auto flex-grow-1 align-items-start">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i>&nbsp;{{ lecture.class_id
+                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i>&nbsp;{{ class.name
                                         }}</p>
                                 </div>
                                 <div class="col-auto flex-grow-1 align-items-end">
