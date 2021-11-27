@@ -8,5 +8,5 @@ your_performance = Blueprint('your_performance', __name__)
 @your_performance.route('/', methods=['GET'])
 def landing():
     pupil_id = db.session.query(User.id).filter(User.login == session["name"]).first()
-    grades = db.session.query(ListOfGrades).filter(ListOfGrades.pupil_id == pupil_id[0]).all()
-    return render_template('pupil/your_performance.html', grades = grades)
+    listofgrades = db.session.query(ListOfGrades).filter(ListOfGrades.pupil_id == pupil_id[0]).all()
+    return render_template('pupil/your_performance.html', listofgrades = listofgrades)
