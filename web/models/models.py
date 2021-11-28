@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from app import db
-
-class User(db.Model):
+from sqlalchemy.ext.declarative import ConcreteBase
+class User(ConcreteBase, db.Model):
     __tablename__ = "user"
     
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +10,12 @@ class User(db.Model):
     surname = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     
-    def __init__(self, login, name, surname, password = None):
+    __mapper_args__ = {
+        'polymorphic_identity': 'user'
+    }
+    
+    def __init__(self, id, login, name, surname, password = None):
+        self.id = id
         self.name = name
         self.login = login
         self.surname = surname
@@ -27,11 +32,16 @@ class Teacher(User):
     room = db.Column(db.Integer, nullable=False)
     
     __mapper_args__ = {
+        'polymorphic_identity': 'teacher',
         'concrete': True
     }
     
-    def __init__(self, id, room):
+    def __init__(self, id, login, name, surname, password, room):
         self.id = id
+        self.name = name
+        self.login = login
+        self.surname = surname
+        self.password = password
         self.room = room
 
 class Pupil(User):
@@ -49,11 +59,16 @@ class Pupil(User):
     lesson = db.relationship('Lesson')
     
     __mapper_args__ = {
+        'polymorphic_identity': 'pupil',
         'concrete': True
     }
     
-    def __init__(self, id, birthDate, class_id, lesson_id):
+    def __init__(self, id, login, name, surname, password, birthDate, class_id, lesson_id):
         self.id = id
+        self.name = name
+        self.login = login
+        self.surname = surname
+        self.password = password
         self.birthDate = birthDate
         self.class_id = class_id
         self.lesson_id = lesson_id
@@ -129,9 +144,9 @@ class Frequency(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     id_lesson = db.Column(db.ForeignKey('lesson.id'))
-    lesson = db.relationship('Lesson')
+    lesson = db.relationship('Lesson', lazy='joined')
     id_pupil = db.Column(db.ForeignKey('pupil.id'))
-    pupil = db.relationship('Pupil')
+    pupil = db.relationship('Pupil', lazy='joined')
 
     def __init__(self, lesson_id, pupil_id):
         self.lesson_id = lesson_id

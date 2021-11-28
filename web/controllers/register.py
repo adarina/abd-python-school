@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from flask import request, Blueprint, render_template, redirect
 from flask.helpers import make_response, url_for
 from app.models.models import Teacher, User, Pupil, Grade, Class, ListOfGrades, db
@@ -5,7 +6,7 @@ from app.models.models import Teacher, User, Pupil, Grade, Class, ListOfGrades, 
 register = Blueprint('register', __name__)
 
 
-@register.route('/', methods=['GET', 'POST'])
+@register.route('', methods=['GET', 'POST'])
 def add_user(success=False):
     if request.method == 'POST':
         userLogin = request.form.get("userLogin")
@@ -16,12 +17,12 @@ def add_user(success=False):
         teacherRoom = request.form.get("teacherRoom")
         pupilBirthDate = request.form.get("pupilBirthDate")
 
-        user = User(userLogin, userName, userSurname, userPassword)
-        db.session.add(user)
+        user_id = (db.session.query(func.max(User.id)).scalar() or 0) + 1
+        # db.session.add(user)
         
         if (teacherRoom != None):
             db.session.commit()
-            db.session.add(Teacher(user.id, teacherRoom))
+            db.session.add(Teacher(user_id, userLogin, userName, userSurname, userPassword, teacherRoom))
             db.session.commit()
             
         elif (pupilBirthDate != None):
@@ -33,8 +34,8 @@ def add_user(success=False):
             
 
             print(class_id[0])
-            print(user.id)
-            db.session.add(Pupil(user.id, pupilBirthDate, class_id[0], None))
+            print(user_id)
+            db.session.add(Pupil(user_id, userLogin, userName, userSurname, userPassword, pupilBirthDate, class_id[0], None))
             db.session.commit()
             a_class = db.session.query(Class).filter(Class.name == '2B').first()
             a_class.pupilCount += 1
@@ -42,11 +43,11 @@ def add_user(success=False):
            
             db.session.commit()
 
-            listOfGrades = ListOfGrades('C',0 , user.id)
+            listOfGrades = ListOfGrades('C',0 , user_id)
             db.session.add(listOfGrades)
             db.session.commit()
 
-            listOfGrades = ListOfGrades('B',0 , user.id)
+            listOfGrades = ListOfGrades('B',0 , user_id)
             db.session.add(listOfGrades)
             db.session.commit()
 

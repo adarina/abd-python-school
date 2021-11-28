@@ -23,8 +23,8 @@ def log_in(success=False):
         if (user_login != None and user_password != None):
             if (user_login[0] == userLogin and user_password[0] == userPassword):
 
-                pupil_id = db.session.query(Pupil.user_id).filter(Pupil.user_id == user_id[0]).first()
-                teacher_id = db.session.query(Teacher.user_id).filter(Teacher.user_id == user_id[0]).first()
+                pupil_id = db.session.query(Pupil.id).filter(Pupil.id == user_id[0]).first()
+                teacher_id = db.session.query(Teacher.id).filter(Teacher.id == user_id[0]).first()
 
                 if (teacher_id != None):
                     if(user_id[0] == teacher_id[0]):
