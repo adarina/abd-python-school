@@ -34,7 +34,7 @@ def add_user(success=False):
 
             print(class_id[0])
             print(user.id)
-            db.session.add(Pupil(user.id, pupilBirthDate, class_id[0]))
+            db.session.add(Pupil(user.id, pupilBirthDate, class_id[0], None))
             db.session.commit()
             a_class = db.session.query(Class).filter(Class.name == '2B').first()
             a_class.pupilCount += 1

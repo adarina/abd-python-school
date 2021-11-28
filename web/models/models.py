@@ -35,11 +35,14 @@ class Pupil(db.Model):
     user = db.relationship('User')
     class_id = db.Column(db.ForeignKey('class.id'))
     _class = db.relationship('Class')
+    lesson_id = db.Column(db.ForeignKey('lesson.id'), nullable=True)
+    lesson = db.relationship('Lesson')
     
-    def __init__(self, user_id, birthDate, class_id):
+    def __init__(self, user_id, birthDate, class_id, lesson_id):
         self.user_id = user_id
         self.birthDate = birthDate
         self.class_id = class_id
+        self.lesson_id = lesson_id
 
 class Grade(db.Model):
     __tablename__ = "grade"

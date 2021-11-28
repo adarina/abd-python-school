@@ -12,8 +12,8 @@ def landing():
     gradings = db.session.query(Pupil, User, Grade, ListOfGrades)\
         .filter(Grade.teacher_id == teacher_id[0])\
         .filter(Pupil.user_id == User.id)\
-            .filter(Grade.evaluated == Pupil.user_id)\
-                .filter(ListOfGrades.id == Grade.subject).all()
+        .filter(Grade.evaluated == Pupil.user_id)\
+        .filter(ListOfGrades.id == Grade.subject).all()
 
     return render_template('teacher/grading.html', gradings=gradings)
 
