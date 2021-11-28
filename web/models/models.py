@@ -109,3 +109,19 @@ class ListOfGrades(db.Model):
         self.name = name
         self.average = average
         self.pupil_id = pupil_id
+
+class Frequency(db.Model):
+    __tablename__ = "frequency"
+
+    id = db.Column(db.Integer, primary_key=True)
+    id_lesson = db.Column(db.ForeignKey('lesson_id'))
+    lesson = db.relationship('Lesson')
+    id_pupil = db.Column(db.ForeignKey('pupil.user_id'))
+    pupil = db.relationship('Pupil')
+
+    def __init__(self, lesson_id, pupil_id):
+        self.lesson_id = lesson_id
+        self.pupil_id = pupil_id
+
+
+    
