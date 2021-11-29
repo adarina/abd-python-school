@@ -44,6 +44,11 @@
                 <div class="d-flex flex-column shadow-lg rounded-3 my-4">
                     <h2 class="px-3 pt-3" style="margin: 0;">&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;Grades</h2>
                     <hr style="height: 2px;">
+                    {% if success %}
+                    <div class="alert alert-success" role="alert">
+                        New grade added to database!
+                    </div>
+                    {% endif %}
                     <div class="row px-1">
                         
                         {% for pupil, grade, list in gradings%}
@@ -127,13 +132,6 @@
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content shadow rounded-3">
-       
-            <div class="col m-4 p-1">
-                {% if success %}
-    <div class="alert alert-success" role="alert">
-        New grade added to database!
-    </div>
-    {% endif %}
     <form method="POST">
         <div class="row">
             <div class="py-1 form-group">
@@ -144,17 +142,21 @@
                 <div class="row">
                     <div class="py-1 form-group">
                         <label for="gradePupil" class="p-1 m-0"><i class="fas fa-graduation-cap"></i></label>
-                        <input type="text" class="form-control"  id="gradePupil" name="gradePupil">
+                        <select class="form-control" id="gradePupil" name="gradePupil">
+                            {% for pupil in pupils %}
+                            <option value="{{pupil.id}}">{{ pupil.name + ' ' + pupil.surname }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="py-1 form-group">
                         <label for="gradeSubject" class="p-1 m-0"><i class="fas fa-edit"></i></label>
-                        <select type="text" class="form-control" id="gradeSubject" name="gradeSubject">
-                            <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="English">English</option>
-                    </select>
+                        <select class="form-control" id="gradeSubject" name="gradeSubject">
+                            <option value="CHEMISTRY">CHEMISTRY</option>
+                            <option value="MATHS">MATHS</option>
+                            <option value="ENGLISH">ENGLISH</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">

@@ -127,7 +127,7 @@ class ListOfGrades(db.Model):
     grades = db.relationship('Grade', backref=backref('listofgrades', lazy='joined'))
 
     def __init__(self, name, average, pupil_id):
-        self.name = name
+        self.name = name.upper()
         self.average = average
         self.pupil_id = pupil_id
 
