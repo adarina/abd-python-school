@@ -1,7 +1,8 @@
+from sqlalchemy.sql.expression import null
 from flask_sqlalchemy import SQLAlchemy
 from app import db
 from sqlalchemy.ext.declarative import AbstractConcreteBase
-from sqlalchemy.orm import configure_mappers
+from sqlalchemy.orm import backref, configure_mappers
 class User(AbstractConcreteBase, db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +27,7 @@ class Teacher(User):
     surname = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     room = db.Column(db.Integer, nullable=False)
+    lessons = db.relationship('Lesson', backref='teacher')
     
     __mapper_args__ = {
         'polymorphic_identity': 'teacher',
@@ -49,25 +51,23 @@ class Pupil(User):
     surname = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     birthDate = db.Column(db.Integer, nullable=False)
-    class_id = db.Column(db.ForeignKey('class.id'))
-    _class = db.relationship('Class')
-    lesson_id = db.Column(db.ForeignKey('lesson.id'), nullable=True)
-    lesson = db.relationship('Lesson')
-    
+    class_name = db.Column(db.String(128), db.ForeignKey('class.name'))
+    grade_lists = db.relationship('ListOfGrades', backref='pupil')
+    frequency = db.relationship('Frequency', backref=backref('pupil', lazy='joined'))
+
     __mapper_args__ = {
         'polymorphic_identity': 'pupil',
         'concrete': True
     }
     
-    def __init__(self, id, login, name, surname, password, birthDate, class_id, lesson_id):
+    def __init__(self, id, login, name, surname, password, birthDate, class_name):
         self.id = id
         self.name = name
         self.login = login
         self.surname = surname
         self.password = password
         self.birthDate = birthDate
-        self.class_id = class_id
-        self.lesson_id = lesson_id
+        self.class_name = class_name
 
 class Grade(db.Model):
     __tablename__ = "grade"
@@ -75,16 +75,14 @@ class Grade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Integer, nullable=False)
     evaluated = db.Column(db.ForeignKey('pupil.id'))
-    pupil = db.relationship('Pupil')
     description = db.Column(db.String(128), nullable=False)
-    subject = db.Column(db.ForeignKey('listofgrades.id'))
+    subject = db.Column(db.String(128), nullable=False)
     grade = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     teacher_id = db.Column(db.ForeignKey('teacher.id'))
-    teacher = db.relationship('Teacher')
-    listofgrades = db.relationship('ListOfGrades')
+    listofgrades_id = db.Column(db.ForeignKey('listofgrades.id'))
 
-    def __init__(self, date, evaluated, description, subject, grade, weight, teacher_id):
+    def __init__(self, date, evaluated, description, subject, grade, weight, teacher_id, listofgrades_id):
         self.date = date
         self.evaluated = evaluated
         self.description = description
@@ -92,6 +90,7 @@ class Grade(db.Model):
         self.grade = grade
         self.weight = weight
         self.teacher_id = teacher_id
+        self.listofgrades_id = listofgrades_id
 
 class Lesson(db.Model):
     __tablename__ = "lesson"
@@ -100,24 +99,21 @@ class Lesson(db.Model):
     dateOfExecution = db.Column(db.Integer, nullable=False)
     topic = db.Column(db.String(128), nullable=False)
     teacher_id = db.Column(db.ForeignKey('teacher.id'))
-    teacher = db.relationship('Teacher')
-    class_id = db.Column(db.ForeignKey('class.id'))
-    _class = db.relationship('Class')
+    frequency  = db.relationship('Frequency', backref=backref('lesson', lazy='joined'))
 
-    def __init__(self, dateOfExecution, topic, teacher_id, class_id):
+    def __init__(self, dateOfExecution, topic, teacher_id):
         self.dateOfExecution = dateOfExecution
         self.topic = topic
         self.teacher_id = teacher_id
-        self.class_id = class_id
 
 class Class(db.Model):
     __tablename__ = "class"
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(128), primary_key=True)
     pupilCount = db.Column(db.Integer, nullable=False)
+    pupils = db.relationship('Pupil', backref='class')
 
-    def __init__(self, name, pupilCount):
+    def __init__(self, name, pupilCount = 0):
         self.name = name
         self.pupilCount = pupilCount
 
@@ -128,7 +124,7 @@ class ListOfGrades(db.Model):
     name = db.Column(db.String(128), nullable=False)
     average = db.Column(db.Numeric(asdecimal=False), nullable=False)
     pupil_id = db.Column(db.ForeignKey('pupil.id'))
-    pupil = db.relationship('Pupil')
+    grades = db.relationship('Grade', backref=backref('listofgrades', lazy='joined'))
 
     def __init__(self, name, average, pupil_id):
         self.name = name
@@ -137,12 +133,10 @@ class ListOfGrades(db.Model):
 
 class Frequency(db.Model):
     __tablename__ = "frequency"
+    
+    id_lesson = db.Column(db.ForeignKey('lesson.id'), primary_key=True)
+    id_pupil = db.Column(db.ForeignKey('pupil.id'), primary_key=True)
 
-    id = db.Column(db.Integer, primary_key=True)
-    id_lesson = db.Column(db.ForeignKey('lesson.id'))
-    lesson = db.relationship('Lesson', lazy='joined')
-    id_pupil = db.Column(db.ForeignKey('pupil.id'))
-    pupil = db.relationship('Pupil', lazy='joined')
 
     def __init__(self, lesson_id, pupil_id):
         self.lesson_id = lesson_id
