@@ -58,18 +58,7 @@ A w konsoli:
     db.session.commit()
 ''' 
                
-               
-from .models.models import Class
-app.app_context().push()
-any_class = db.session.query(Class).first()
-if not any_class:
-    db.session.add(Class("1A"))
-    db.session.add(Class("1B"))
-    db.session.add(Class("2A"))
-    db.session.add(Class("2B"))
-    db.session.add(Class("3A"))
-    db.session.add(Class("3B"))
-    db.session.commit()
+            
 '''
 Aby stworzyć swojego użytkownika:
     db.session.add(User(email='abc@example.com'))
@@ -81,5 +70,16 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
     # Recreate database each time for demo
 
-
-app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
+    from .models.models import Class
+    app.app_context().push()
+    any_class = db.session.query(Class).first()
+    if not any_class:
+        db.session.add(Class("1A"))
+        db.session.add(Class("1B"))
+        db.session.add(Class("2A"))
+        db.session.add(Class("2B"))
+        db.session.add(Class("3A"))
+        db.session.add(Class("3B"))
+        db.session.commit()
