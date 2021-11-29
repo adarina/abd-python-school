@@ -50,7 +50,7 @@ class Pupil(User):
     name = db.Column(db.String(128), nullable=False)
     surname = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    birthDate = db.Column(db.Integer, nullable=False)
+    birthDate = db.Column(db.Date, nullable=False)
     class_name = db.Column(db.String(128), db.ForeignKey('class.name'))
     grade_lists = db.relationship('ListOfGrades', backref='pupil')
     frequency = db.relationship('Frequency', backref=backref('pupil', lazy='joined'))
@@ -73,7 +73,7 @@ class Grade(db.Model):
     __tablename__ = "grade"
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.Date, nullable=False)
     evaluated = db.Column(db.ForeignKey('pupil.id'))
     description = db.Column(db.String(128), nullable=False)
     subject = db.Column(db.String(128), nullable=False)
@@ -96,7 +96,7 @@ class Lesson(db.Model):
     __tablename__ = "lesson"
 
     id = db.Column(db.Integer, primary_key=True)
-    dateOfExecution = db.Column(db.Integer, nullable=False)
+    dateOfExecution = db.Column(db.Date, nullable=False)
     topic = db.Column(db.String(128), nullable=False)
     teacher_id = db.Column(db.ForeignKey('teacher.id'))
     frequency  = db.relationship('Frequency', backref=backref('lesson', lazy='joined'))
@@ -127,7 +127,7 @@ class ListOfGrades(db.Model):
     grades = db.relationship('Grade', backref=backref('listofgrades', lazy='joined'))
 
     def __init__(self, name, average, pupil_id):
-        self.name = name
+        self.name = name.upper()
         self.average = average
         self.pupil_id = pupil_id
 
