@@ -86,7 +86,7 @@ class Grade(db.Model):
         self.date = date
         self.evaluated = evaluated
         self.description = description
-        self.subject = subject
+        self.subject = subject.upper()
         self.grade = grade
         self.weight = weight
         self.teacher_id = teacher_id
@@ -114,7 +114,7 @@ class Class(db.Model):
     pupils = db.relationship('Pupil', backref='class')
 
     def __init__(self, name, pupilCount = 0):
-        self.name = name
+        self.name = name.upper()
         self.pupilCount = pupilCount
 
 class ListOfGrades(db.Model):

@@ -68,5 +68,16 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
     # Recreate database each time for demo
 
+from .models.models import Class
+app.app_context().push()
+classes = db.session.query(Class).count()
+if classes <= 0:
+    db.session.add(Class("1A"))
+    db.session.add(Class("1B"))
+    db.session.add(Class("2A"))
+    db.session.add(Class("2B"))
+    db.session.add(Class("3A"))
+    db.session.add(Class("3B"))
+    db.session.commit()
 
 app.run(host='0.0.0.0', port=5000, debug=True)
