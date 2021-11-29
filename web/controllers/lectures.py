@@ -1,13 +1,13 @@
 from flask import request, Blueprint, render_template, redirect, session
 from flask.helpers import make_response, url_for
-from app.models.models import User, Grade, Lesson, Class, db
+from app.models.models import Frequency, User, Grade, Lesson, Class, db
 
 lectures = Blueprint('lectures', __name__)
 
 @lectures.route('/', methods=['GET'])
 def landing():
     teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
-    lectures = db.session.query(Lesson, Class).join(Class).filter(Lesson.teacher_id == teacher_id[0]).all()
+    lectures = db.session.query(Lesson).join(Frequency).filter(Lesson.teacher_id == teacher_id[0]).all()
     return render_template('teacher/lectures.html', lectures=lectures)
 
 @lectures.route('/', methods=['GET', 'POST'])
