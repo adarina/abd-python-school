@@ -14,13 +14,13 @@ def landing():
 def add_lecture(success=False):
     if request.method == 'POST':
         lectureDate = request.form.get("lectureDate")
-        lectureTopic = request.form.get("lectureTopic")
-        lectureClass = request.form.get("lectureClass")
+        lectureTopic = request.form.get("lectureTopic").upper()
+        lectureClass = request.form.get("lectureClass").upper()
     
         teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
-        class_id = db.session.query(Class.id).filter(Class.name == '2B').first()
+        class_name = db.session.query(Class.name).filter(Class.name == lectureClass).first()
 
-        lecture = Lesson(lectureDate, lectureTopic, teacher_id[0], class_id[0])
+        lecture = Lesson(lectureDate, lectureTopic, teacher_id[0], class_name[0])
         db.session.add(lecture)
         db.session.commit()
 
