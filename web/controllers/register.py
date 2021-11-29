@@ -33,21 +33,22 @@ def add_user(success=False):
             class_id = db.session.query(Class.id).filter(Class.name == '2B').first()
             
 
-            print(class_id[0])
-            print(user_id)
+            
             db.session.add(Pupil(user_id, userLogin, userName, userSurname, userPassword, pupilBirthDate, class_id[0], None))
             db.session.commit()
             a_class = db.session.query(Class).filter(Class.name == '2B').first()
             a_class.pupilCount += 1
-
-           
             db.session.commit()
 
-            listOfGrades = ListOfGrades('C',0 , user_id)
+            listOfGrades = ListOfGrades('Chemistry',0 , user_id)
             db.session.add(listOfGrades)
             db.session.commit()
 
-            listOfGrades = ListOfGrades('B',0 , user_id)
+            listOfGrades = ListOfGrades('Biology',0 , user_id)
+            db.session.add(listOfGrades)
+            db.session.commit()
+
+            listOfGrades = ListOfGrades('English',0 , user_id)
             db.session.add(listOfGrades)
             db.session.commit()
 
