@@ -1,18 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from app import db
-from sqlalchemy.ext.declarative import ConcreteBase
-class User(ConcreteBase, db.Model):
-    __tablename__ = "user"
+from sqlalchemy.ext.declarative import AbstractConcreteBase
+from sqlalchemy.orm import configure_mappers
+class User(AbstractConcreteBase, db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(128), nullable=False)
     name = db.Column(db.String(128), nullable=False)
     surname = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    
-    __mapper_args__ = {
-        'polymorphic_identity': 'user'
-    }
     
     def __init__(self, id, login, name, surname, password = None):
         self.id = id
@@ -152,5 +148,6 @@ class Frequency(db.Model):
         self.lesson_id = lesson_id
         self.pupil_id = pupil_id
 
+configure_mappers()
 
     
