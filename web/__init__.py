@@ -65,13 +65,9 @@ Aby stworzyć swojego użytkownika:
     db.session.commit()
 '''
 
-app.secret_key = 'super secret key'
-app.config['SESSION_TYPE'] = 'filesystem'
-
-    # Recreate database each time for demo
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+@app.before_first_request
+def create_tables():
+    db.create_all()
     from .models.models import Class
     app.app_context().push()
     any_class = db.session.query(Class).first()
@@ -82,4 +78,13 @@ if __name__ == "__main__":
         db.session.add(Class("2B"))
         db.session.add(Class("3A"))
         db.session.add(Class("3B"))
-        db.session.commit()
+    db.session.commit()
+
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
+
+    # Recreate database each time for demo
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
+    
