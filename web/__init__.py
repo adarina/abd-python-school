@@ -69,7 +69,6 @@ Aby stworzyć swojego użytkownika:
 def create_tables():
     db.create_all()
     from .models.models import Class
-    app.app_context().push()
     any_class = db.session.query(Class).first()
     if not any_class:
         db.session.add(Class("1A"))
@@ -87,4 +86,3 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
-    
