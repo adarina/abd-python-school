@@ -12,7 +12,7 @@ def landing():
     gradings = db.session.query(Pupil, Grade, ListOfGrades)\
         .filter(Grade.teacher_id == teacher_id[0])\
         .filter(Grade.evaluated == Pupil.id)\
-        .filter(ListOfGrades.id == Grade.subject).all()
+        .filter(ListOfGrades.name == Grade.subject).all()
 
     return render_template('teacher/grading.html', gradings=gradings)
 
