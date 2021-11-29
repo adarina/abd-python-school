@@ -7,25 +7,36 @@ from helpers import random_date
 from mytimer import Timer
 from common import NAMES, SURNAMES
 
-with Timer('Generate users') as t:
-    for i in range():
-        session.add(User(
-            login=random.choice(string.ascii_uppercase),
-            name=random.choice(string.NAMES),
-            surname=random.choice(string.SURNAMES),
-            password=random.choice(string.ascii_uppercase),     
-        ))
-    session.commit()
+# with Timer('Generate users') as t:
+#     for i in range():
+#         db.session.add(User(
+#             login=random.choice(string.ascii_uppercase),
+#             name=random.choice(string.NAMES),
+#             surname=random.choice(string.SURNAMES),
+#             password=random.choice(string.ascii_uppercase),     
+#         ))
+#     session.commit()
 
-with Timer('Generate users') as t:
-    for i in range(1000):
-        session.add(User(
-            login=random.choice(string.ascii_uppercase),
-            name=random.choice(string.NAMES),
-            surname=random.choice(string.SURNAMES),
-            password=random.choice(string.ascii_uppercase),     
-        ))
-    session.commit()
+# with Timer('Generate users') as t:
+#     for i in range(1000):
+#         session.add(User(
+#             login=random.choice(string.ascii_uppercase),
+#             name=random.choice(string.NAMES),
+#             surname=random.choice(string.SURNAMES),
+#             password=random.choice(string.ascii_uppercase),     
+#         ))
+#     session.commit()
+
+# with Timer('Generate users') as t:
+#     users = []
+#     for i in range(10000):
+#         users.append({
+#             'name': random.choice(NAMES),
+#             'surname': random.choice(SURNAMES),
+#             'date_of_birth': random_date()
+#         })
+#     session.execute(User.__table__.insert(users))
+#     session.commit()
 
 
 # class Class(db.Model):
