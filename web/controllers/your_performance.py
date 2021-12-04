@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, session
 
 your_performance = Blueprint('your_performance', __name__)
 
-@your_performance.route('/', methods=['GET'])
+@your_performance.route('', methods=['GET'])
 def landing():
     pupil_id = db.session.query(User.id).filter(User.login == session["name"]).first()
     listofgrades = db.session.query(ListOfGrades).filter(ListOfGrades.pupil_id == pupil_id[0]).all()

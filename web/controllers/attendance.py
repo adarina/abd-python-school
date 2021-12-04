@@ -4,7 +4,7 @@ from app.models.models import Teacher, User, Pupil, db
 
 attendance = Blueprint('attendance', __name__)
 
-@attendance.route('/', methods=['GET'])
+@attendance.route('', methods=['GET'])
 def landing():
     # TO DO
     return render_template('pupil/attendance.html')

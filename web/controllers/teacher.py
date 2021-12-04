@@ -6,6 +6,6 @@ from flask import Flask, render_template, redirect, request, session
 
 teacher = Blueprint('teacher', __name__)
 
-@teacher.route('/', methods=['GET'])
+@teacher.route('', methods=['GET'])
 def landing():
     return render_template('teacher.html')

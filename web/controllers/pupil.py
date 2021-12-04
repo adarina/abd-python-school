@@ -7,11 +7,11 @@ from flask import Flask, render_template, redirect, request, session
 pupil = Blueprint('pupil', __name__)
 
 
-@pupil.route('/', methods=['GET'])
+@pupil.route('', methods=['GET'])
 def landing():
     return render_template('pupil.html')
 
-@pupil.route('/', methods=['GET', 'POST'])
+@pupil.route('', methods=['GET', 'POST'])
 def log_out(success=False):
     session["name"] = None
     return render_template('login.html', success=success)      

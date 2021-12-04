@@ -6,8 +6,9 @@ from sqlalchemy.sql import func
 grading = Blueprint('grading', __name__)
 
 
-@grading.route('/', methods=['GET'])
-def landing(success=False):
+@grading.route('', methods=['GET'])
+def landing():
+    success = request.args.get('success')
     teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
     gradings = db.session.query(Pupil, Grade, ListOfGrades)\
         .filter(Grade.teacher_id == teacher_id[0])\
@@ -18,7 +19,7 @@ def landing(success=False):
     return render_template('teacher/grading.html', gradings=gradings, pupils=pupils, success=success)
 
 
-@grading.route('/', methods=['GET', 'POST'])
+@grading.route('', methods=['GET', 'POST'])
 def add_grade(success=False):
     if request.method == 'POST':
         gradeDate = request.form.get("gradeDate")

@@ -6,12 +6,12 @@ from flask import Flask, render_template, redirect, request, session
 login = Blueprint('login', __name__)
 
 
-@login.route('/', methods=['GET'])
+@login.route('', methods=['GET'])
 def landing():
     return render_template('login.html')
 
 
-@login.route('/', methods=['POST'])
+@login.route('', methods=['POST'])
 def log_in(success=False):
     if request.method == 'POST':
         userLogin = request.form.get("userLogin")
@@ -40,7 +40,7 @@ def log_in(success=False):
     else:
         return render_template('login.html', success=success)
 
-@login.route('/', methods=['GET', 'POST'])
+@login.route('', methods=['GET', 'POST'])
 def log_out():
     session["name"] = None
     print("here")
