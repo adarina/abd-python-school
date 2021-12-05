@@ -14,7 +14,7 @@ from app.common import NAMES, SURNAMES
 
 teacher = Blueprint('teacher', __name__)
 
-@teacher.route('/', methods=['GET'])
+@teacher.route('', methods=['GET'])
 def landing():
     return render_template('teacher.html')
 

@@ -60,7 +60,7 @@
                     <h2 class="px-3 pt-3" style="margin: 0;">&nbsp;<i class="fas fa-chalkboard-teacher"></i>&nbsp;Lectures</h2>
                     <hr style="height: 2px;">
                     <div class="row px-1">
-                        {% for lecture, class in lectures %}
+                        {% for lecture, class, count in lectures %}
                         <div class="col-3 m-4 p-1 shadow rounded-3">
                             <div class="row">
                                 <div class="col">
@@ -70,23 +70,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-auto flex-grow-1 align-items-start">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i>&nbsp;{{ class.name
-                                        }}</p>
+                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i>&nbsp;{{ class.name }}</p>
                                 </div>
                                 <div class="col-auto flex-grow-1 align-items-end">
-                                    <p class="text-end p-1 m-0">&nbsp;??&nbsp;<i class="fas fa-hand-paper"
+                                    <p class="text-end p-1 m-0">{{ count }} <i class="fas fa-hand-paper"
                                             style="font-size: 16px;"></i></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <p class="p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;{{ lecture.topic }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="p-1 m-0"><i class="fas fa-clock" style="font-size: 20px;"></i>&nbsp;TO DO
                                     </p>
                                 </div>
                             </div>
@@ -126,17 +119,13 @@
             </div>
         </div>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content shadow rounded-3">
 
                 <div class="col m-4 p-1">
-                    {% if success %}
-                    <div class="alert alert-success" role="alert">
-                        New grade added to database!
-                    </div>
-                    {% endif %}
                     <form method="POST">
                         <div class="row">
                             <div class="py-1 form-group">
@@ -153,13 +142,23 @@
                         <div class="row">
                             <div class="py-1 form-group">
                                 <label for="lectureClass" class="p-1 m-0"><i class="fas fa-users"></i></label>
-                                <input type="text" class="form-control" id="lectureClass" name="lectureClass">
+                                <select class="form-control" id="lectureClass" name="lectureClass">
+                                    <option selected="true" style='display: none'></option>
+                                    {% for class in classes %}
+                                    <option value="{{class.name}}">{{ class.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="pupilsList" class="py-1 form-group">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <p class="p-1 m-0" style="text-align: center;"><button
-                                        class="btn btn-primary justify-content-center align-items-end align-content-center mx-auto my-2"
+                                        id="lectureBtn"
+                                        class="btn btn-primary justify-content-center align-items-end align-content-center mx-auto my-2 disabled"
                                         type="submit">Add lecture</button></p>
                             </div>
                         </div>
@@ -168,7 +167,10 @@
             </div>
         </div>
     </div>
+
+    <script src="../../static/jquery-3.6.0.min.js"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/lectures.js"></script>
 </body>
 
 </html>

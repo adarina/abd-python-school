@@ -4,7 +4,7 @@ from app.models.models import Teacher, User, Pupil, Lesson, Frequency, db
 
 attendance = Blueprint('attendance', __name__)
 
-@attendance.route('/', methods=['GET'])
+@attendance.route('', methods=['GET'])
 def landing():
 
     pupil_id = db.session.query(User.id).filter(User.login == session["name"]).first()

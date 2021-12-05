@@ -67,7 +67,12 @@ class Pupil(User):
         self.surname = surname
         self.password = password
         self.birthDate = birthDate
-        self.class_name = class_name
+        self.class_name = class_name.upper()
+        
+    def serialize(self):
+        return {"id": self.id,
+                "name": self.name,
+                "surname": self.surname}
 
 class Grade(db.Model):
     __tablename__ = "grade"
@@ -99,12 +104,14 @@ class Lesson(db.Model):
     dateOfExecution = db.Column(db.Date, nullable=False)
     topic = db.Column(db.String(128), nullable=False)
     teacher_id = db.Column(db.ForeignKey('teacher.id'))
+    for_class = db.Column(db.String(128), db.ForeignKey('class.name'))
     frequency  = db.relationship('Frequency', backref=backref('lesson', lazy='joined'))
 
-    def __init__(self, dateOfExecution, topic, teacher_id):
+    def __init__(self, dateOfExecution, topic, teacher_id, for_class):
         self.dateOfExecution = dateOfExecution
         self.topic = topic
         self.teacher_id = teacher_id
+        self.for_class = for_class.upper()
 
 class Class(db.Model):
     __tablename__ = "class"
@@ -134,13 +141,14 @@ class ListOfGrades(db.Model):
 class Frequency(db.Model):
     __tablename__ = "frequency"
     
-    id_lesson = db.Column(db.ForeignKey('lesson.id'), primary_key=True)
-    id_pupil = db.Column(db.ForeignKey('pupil.id'), primary_key=True)
+    lesson_id = db.Column(db.ForeignKey('lesson.id'), primary_key=True)
+    pupil_id = db.Column(db.ForeignKey('pupil.id'), primary_key=True)
+    frequency = db.Column(db.Integer, nullable=False)
 
-
-    def __init__(self, lesson_id, pupil_id):
+    def __init__(self, lesson_id, pupil_id, frequency):
         self.lesson_id = lesson_id
         self.pupil_id = pupil_id
+        self.frequency = frequency
 
 configure_mappers()
 
