@@ -10,10 +10,9 @@ grading = Blueprint('grading', __name__)
 def landing():
     success = request.args.get('success')
     teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
-    gradings = db.session.query(Pupil, Grade, ListOfGrades)\
+    gradings = db.session.query(Pupil, Grade)\
         .filter(Grade.teacher_id == teacher_id[0])\
-        .filter(Grade.evaluated == Pupil.id)\
-        .filter(ListOfGrades.name == Grade.subject).all()
+        .filter(Grade.evaluated == Pupil.id).all()
     pupils = db.session.query(Pupil).all()
 
     return render_template('teacher/grading.html', gradings=gradings, pupils=pupils, success=success)

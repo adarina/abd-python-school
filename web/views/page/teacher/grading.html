@@ -51,7 +51,7 @@
                     {% endif %}
                     <div class="row px-1">
                         
-                        {% for pupil, grade, list in gradings%}
+                        {% for pupil, grade in gradings%}
                                     <div class="col-3 m-4 p-1 shadow rounded-3">
                                         <div class="row">
                                             <div class="col">
@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <p class="p-1 m-0"><i class="fas fa-edit"></i>&nbsp;{{ list.name}}</p>
+                                                <p class="p-1 m-0"><i class="fas fa-edit"></i>&nbsp;{{ grade.subject }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -92,11 +92,7 @@
                                         </div>
                                         
                                     </div>
-                               
-                                    
-                           
-                                  
-                                    
+
                                     {% endfor %}
 
                                     <div class="col-3 m-4 p-1 shadow rounded-3">
