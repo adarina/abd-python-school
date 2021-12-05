@@ -1,7 +1,6 @@
 from flask import jsonify, request, Blueprint, render_template, redirect, session
 from sqlalchemy import func
 from flask.helpers import make_response, url_for
-from sqlalchemy import or_, literal
 from app.models.models import Pupil, Teacher, Frequency, User, Grade, Lesson, Class, db
 
 lectures = Blueprint('lectures', __name__)
