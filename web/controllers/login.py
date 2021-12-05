@@ -29,12 +29,12 @@ def log_in(success=False):
                 if (teacher_id != None):
                     if(user_id[0] == teacher_id[0]):
                         session["name"] = request.form.get("userLogin")
-                        return render_template('teacher.html', success=success)
+                        return redirect(url_for('teacher.landing'))
 
                 if (pupil_id != None):
                     if(user_id[0] == pupil_id[0]):
                         session["name"] = request.form.get("userLogin")
-                        return render_template('pupil.html', success=success)
+                        return redirect(url_for('pupil.landing'))
 
         return render_template('login.html', success=success)
     else:

@@ -1,7 +1,7 @@
 from flask import request, Blueprint, render_template, redirect, session
 from flask.helpers import make_response, url_for
 from app.models.models import Teacher, User, Grade, ListOfGrades, Pupil, db
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, label
 
 grading = Blueprint('grading', __name__)
 
@@ -35,7 +35,7 @@ def add_grade(success=False):
     db.session.add(grade)
     db.session.commit()
 
-    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+    average = db.session.query(label('average', 1.0 * func.sum(Grade.grade * Grade.weight) / func.sum(Grade.weight)))\
         .filter(Grade.subject == gradeSubject)\
         .filter(Grade.evaluated == pupil_id).scalar()
     db.session.query(ListOfGrades)\
@@ -64,7 +64,7 @@ def update():
     grade.weight = gradeWeight
     db.session.commit()
 
-    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+    average = db.session.query(label('average', 1.0 * func.sum(Grade.grade * Grade.weight) / func.sum(Grade.weight)))\
         .filter(Grade.subject == gradeSubject)\
         .filter(Grade.listofgrades_id == grade.listofgrades_id).scalar()
     db.session.query(ListOfGrades)\
@@ -86,9 +86,9 @@ def delete():
     db.session.delete(grade)
     db.session.commit()
 
-    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+    average = db.session.query(label('average', 1.0 * func.sum(Grade.grade * Grade.weight) / func.sum(Grade.weight)))\
         .filter(Grade.subject == gradeSubject)\
-        .filter(Grade.listofgrades_id == gradeLog).scalar()
+        .filter(Grade.listofgrades_id == gradeLog).scalar() or 0
     db.session.query(ListOfGrades)\
         .filter(ListOfGrades.name == gradeSubject)\
         .filter(ListOfGrades.pupil_id == gradeLog)\
