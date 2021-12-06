@@ -1,3 +1,16 @@
+$(document).ready(function() {
+    $('#delete').on('click', function() {
+        $.ajax({
+            type: "DELETE",
+            url: `grading/delete/${$('input[name=gradeId]').val()}`,
+            encode: true,
+        }).done(function(data) {
+            location.reload();
+        });
+        return false;
+    })
+});
+
 function editGrade(id) {
     $('input[name=gradeDate]').val( $(`#g-${id}-date`).text() );
     $('select[name=gradePupil]').val( $(`#g-${id}-pupilid`).text() );

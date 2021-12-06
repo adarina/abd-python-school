@@ -1,4 +1,4 @@
-from flask import request, Blueprint, render_template, redirect, session
+from flask import request, Blueprint, render_template, redirect, session, jsonify
 from flask.helpers import make_response, url_for
 from app.models.models import Teacher, User, Grade, ListOfGrades, Pupil, db
 from sqlalchemy.sql import func, label
@@ -44,7 +44,7 @@ def add_grade(success=False):
         .update({ListOfGrades.average: average})
 
     db.session.commit()
-    return make_response(redirect(url_for('grading.landing', success=True)))
+    return make_response(jsonify({'message': 'Created'}), 200)
     
 @grading.route('/update', methods=['POST'])
 def update():
@@ -74,11 +74,10 @@ def update():
 
     db.session.commit()
         
-    return make_response(redirect(url_for('grading.landing', success=True)))
+    return make_response(jsonify({'message': 'Updated'}), 200)
 
-@grading.route('/delete', methods=['POST'])
-def delete():
-    gradeId = request.form.get("gradeId")
+@grading.route('/delete/<gradeId>', methods=['DELETE'])
+def delete(gradeId):
     grade = db.session.query(Grade).filter(Grade.id == gradeId).first()
     gradeSubject = grade.subject
     gradeLog = grade.listofgrades_id
@@ -96,4 +95,4 @@ def delete():
 
     db.session.commit()
         
-    return make_response(redirect(url_for('grading.landing', success=True)))
+    return make_response(jsonify({'message': 'Deleted'}), 200)
