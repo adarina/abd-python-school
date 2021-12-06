@@ -10,42 +10,90 @@ grading = Blueprint('grading', __name__)
 def landing():
     success = request.args.get('success')
     teacher_id = db.session.query(User.id).filter(User.login == session["name"]).first()
-    gradings = db.session.query(Pupil, Grade, ListOfGrades)\
+    gradings = db.session.query(Pupil, Grade)\
         .filter(Grade.teacher_id == teacher_id[0])\
-        .filter(Grade.evaluated == Pupil.id)\
-        .filter(ListOfGrades.name == Grade.subject).all()
+        .filter(Grade.evaluated == Pupil.id).order_by(Grade.date).limit(6).all()
     pupils = db.session.query(Pupil).all()
 
     return render_template('teacher/grading.html', gradings=gradings, pupils=pupils, success=success)
 
 
-@grading.route('', methods=['GET', 'POST'])
+@grading.route('', methods=['POST'])
 def add_grade(success=False):
-    if request.method == 'POST':
-        gradeDate = request.form.get("gradeDate")
-        gradeDescription = request.form.get("gradeDescription")
-        gradePupil = request.form.get("gradePupil")
-        gradeSubject = request.form.get("gradeSubject").upper()
-        gradeGrade = request.form.get("gradeGrade")
-        gradeWeight = request.form.get("gradeWeight")
+    gradeDate = request.form.get("gradeDate")
+    gradeDescription = request.form.get("gradeDescription")
+    gradePupil = request.form.get("gradePupil")
+    gradeSubject = request.form.get("gradeSubject").upper()
+    gradeGrade = request.form.get("gradeGrade")
+    gradeWeight = request.form.get("gradeWeight")
 
-        pupil_id = db.session.query(Pupil.id).filter(Pupil.id == gradePupil).first()[0]
-        gradelist_id = db.session.query(ListOfGrades.id).filter(ListOfGrades.name == gradeSubject).first()[0]
-        teacher_id = db.session.query(Teacher.id).filter(Teacher.login == session["name"]).first()[0]
+    pupil_id = db.session.query(Pupil.id).filter(Pupil.id == gradePupil).first()[0]
+    gradelist_id = db.session.query(ListOfGrades.id).filter(ListOfGrades.name == gradeSubject).first()[0]
+    teacher_id = db.session.query(Teacher.id).filter(Teacher.login == session["name"]).first()[0]
 
-        grade = Grade(gradeDate, pupil_id, gradeDescription, gradeSubject, gradeGrade, gradeWeight, teacher_id, gradelist_id)
-        db.session.add(grade)
-        db.session.commit()
+    grade = Grade(gradeDate, pupil_id, gradeDescription, gradeSubject, gradeGrade, gradeWeight, teacher_id, gradelist_id)
+    db.session.add(grade)
+    db.session.commit()
 
-        average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
-            .filter(Grade.subject == gradeSubject)\
-            .filter(Grade.evaluated == pupil_id).scalar()
-        db.session.query(ListOfGrades)\
-            .filter(ListOfGrades.name == gradeSubject)\
-            .filter(ListOfGrades.pupil_id == pupil_id)\
-            .update({ListOfGrades.average: average})
+    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+        .filter(Grade.subject == gradeSubject)\
+        .filter(Grade.evaluated == pupil_id).scalar()
+    db.session.query(ListOfGrades)\
+        .filter(ListOfGrades.name == gradeSubject)\
+        .filter(ListOfGrades.pupil_id == pupil_id)\
+        .update({ListOfGrades.average: average})
 
-        db.session.commit()
-        return make_response(redirect(url_for('grading.add_grade', success=True)))
-    else:
-        return render_template('grading.html', success=success)
+    db.session.commit()
+    return make_response(redirect(url_for('grading.landing', success=True)))
+    
+@grading.route('/update', methods=['POST'])
+def update():
+    gradeId = request.form.get("gradeId")
+    gradeDate = request.form.get("gradeDate")
+    gradeDescription = request.form.get("gradeDescription")
+    gradeSubject = request.form.get("gradeSubject").upper()
+    gradeGrade = request.form.get("gradeGrade")
+    gradeWeight = request.form.get("gradeWeight")
+    
+    grade = db.session.query(Grade).filter(Grade.id == gradeId).first()
+
+    grade.date = gradeDate
+    grade.description = gradeDescription
+    grade.subject = gradeSubject
+    grade.grade = gradeGrade
+    grade.weight = gradeWeight
+    db.session.commit()
+
+    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+        .filter(Grade.subject == gradeSubject)\
+        .filter(Grade.listofgrades_id == grade.listofgrades_id).scalar()
+    db.session.query(ListOfGrades)\
+        .filter(ListOfGrades.name == gradeSubject)\
+        .filter(ListOfGrades.pupil_id == grade.listofgrades_id)\
+        .update({ListOfGrades.average: average})
+
+    db.session.commit()
+        
+    return make_response(redirect(url_for('grading.landing', success=True)))
+
+@grading.route('/delete', methods=['POST'])
+def delete():
+    gradeId = request.form.get("gradeId")
+    grade = db.session.query(Grade).filter(Grade.id == gradeId).first()
+    gradeSubject = grade.subject
+    gradeLog = grade.listofgrades_id
+    
+    db.session.delete(grade)
+    db.session.commit()
+
+    average = db.session.query(func.avg(Grade.grade * Grade.weight).label('average'))\
+        .filter(Grade.subject == gradeSubject)\
+        .filter(Grade.listofgrades_id == gradeLog).scalar()
+    db.session.query(ListOfGrades)\
+        .filter(ListOfGrades.name == gradeSubject)\
+        .filter(ListOfGrades.pupil_id == gradeLog)\
+        .update({ListOfGrades.average: average})
+
+    db.session.commit()
+        
+    return make_response(redirect(url_for('grading.landing', success=True)))

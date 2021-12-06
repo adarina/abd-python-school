@@ -7,6 +7,9 @@ from helpers import random_date
 from mytimer import Timer
 from common import NAMES, SURNAMES
 
+
+
+
 # with Timer('Generate users') as t:
 #     for i in range():
 #         db.session.add(User(

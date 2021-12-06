@@ -46,122 +46,72 @@
                         <div class="col-12">
                             <p class="px-3 overview-secondary m-0"><i class="far fa-calendar-alt" style="font-size: 20px;"></i>&nbsp;Recent lectures</p>
                         </div>
-                        <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;Yesterday</p>
-                                </div>
-                            </div>
-                            <div class="row text-center flex-column flex-grow-1">
-                                <div class="col d-flex flex-column flex-grow-1 justify-content-center align-items-start">
-                                    <div class="row row-cols-2 d-flex flex-row flex-grow-1 align-items-stretch align-content-stretch align-self-stretch">
-                                        <div class="col-auto flex-grow-1 align-items-start">
-                                            <p class="text-start p-1 m-0"><i class="fas fa-users"></i><strong>&nbsp;</strong>2B</p>
-                                        </div>
-                                        <div class="col-auto flex-grow-1 align-items-end">
-                                            <p class="text-end p-1 m-0"><strong>&nbsp;</strong>23&nbsp;<i class="fas fa-hand-paper" style="font-size: 16px;"></i></p>
-                                        </div>
+                        {% for lecture, class, count in lectures %}
+                            <div class="col-3 m-4 p-1 shadow rounded-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0" style="text-align: center;"><i class="fas fa-calendar"
+                                                style="width: 18.003px;"></i>&nbsp;{{ lecture.dateOfExecution }}</p>
                                     </div>
-                                    <p class="text-start p-1 m-0"><i class="fas fa-chalkboard"></i><strong>&nbsp;</strong>Wielomiany - ćwiczenia, cz. 1</p>
-                                    <p class="text-center p-1 m-0"><i class="fas fa-clock" style="font-size: 20px;"></i><strong>&nbsp;</strong>8:00 - 8:45</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;Yesterday</p>
-                                </div>
-                            </div>
-                            <div class="row text-center flex-column flex-grow-1">
-                                <div class="col d-flex flex-column justify-content-center align-items-start">
-                                    <div class="row row-cols-2 d-flex flex-row flex-grow-1 align-items-stretch align-content-stretch align-self-stretch">
-                                        <div class="col-auto flex-grow-1 align-items-start">
-                                            <p class="text-start p-1 m-0"><i class="fas fa-users"></i><strong>&nbsp;</strong>2B</p>
-                                        </div>
-                                        <div class="col-auto flex-grow-1 align-items-end">
-                                            <p class="text-end p-1 m-0"><strong>&nbsp;</strong>24&nbsp;<i class="fas fa-hand-paper" style="font-size: 16px;"></i></p>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-auto flex-grow-1 align-items-start">
+                                        <p class="text-start p-1 m-0"><i class="fas fa-users"></i>&nbsp;{{ class.name }}</p>
                                     </div>
-                                    <p class="text-start p-1 m-0"><i class="fas fa-chalkboard"></i><strong>&nbsp;</strong>Wielomiany - ćwiczenia, cz. 2</p>
-                                    <p class="text-center p-1 m-0"><i class="fas fa-clock" style="font-size: 20px;"></i><strong>&nbsp;</strong>8:55 - 9:40</p>
+                                    <div class="col-auto flex-grow-1 align-items-end">
+                                        <p class="text-end p-1 m-0">{{ count }} <i class="fas fa-hand-paper"
+                                                style="font-size: 16px;"></i></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;{{ lecture.topic }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col d-flex flex-column flex-grow-1 flex-shrink-0 m-4 p-1 shadow rounded-3">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;Today</p>
-                                </div>
-                            </div>
-                            <div class="row text-center flex-grow-1">
-                                <div class="col d-flex flex-column flex-grow-1 justify-content-center align-items-xl-center"><i class="fas fa-plus" style="font-size: 60px;"></i>
-                                    <p class="text-center p-1 m-0"><strong>New lecture</strong></p>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="row px-1">
                         <div class="col-12">
                             <p class="px-3 overview-secondary m-0"><i class="fas fa-edit" style="width: 17.253px;"></i><strong>&nbsp;</strong>Recently graded</p>
                         </div>
-                        <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;29.09.2021</p>
+                        {% for pupil, grade in gradings%}
+                            <div class="col-3 m-4 p-1 shadow rounded-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0" style="text-align: center;"><i class="fas fa-calendar"
+                                                style="width: 18.003px;"></i>&nbsp;{{ grade.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-graduation-cap"></i>&nbsp;{{ pupil.name }} {{ pupil.surname }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-edit"></i>&nbsp;{{ grade.subject }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;{{ grade.description }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-star"></i>&nbsp;{{ grade.grade }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-weight-hanging"></i>&nbsp;{{ grade.weight }}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row row-cols-2 d-flex flex-row flex-grow-1 align-items-stretch align-content-stretch align-self-stretch">
-                                <div class="col-auto flex-grow-1 align-items-start">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i><strong>&nbsp;</strong>2B</p>
-                                </div>
-                                <div class="col-auto flex-grow-1 align-items-end">
-                                    <p class="text-end p-1 m-0"><strong>&nbsp;</strong>23&nbsp;<i class="fas fa-pen" style="font-size: 16px;"></i></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="p-1 m-0"><i class="fas fa-edit"></i>&nbsp;Maths</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;Geometria płaska</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-clock" style="font-size: 20px;"></i><strong>&nbsp;</strong>8:00 - 8:45</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col d-flex flex-column m-4 p-1 shadow rounded-3" style="background: radial-gradient(var(--bs-body-bg) 0%, var(--bs-primary) 225%);">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center p-1 m-0"><i class="fas fa-hourglass-half" style="width: 18.003px;"></i><i class="fas fa-calendar-plus" style="width: 18.003px;"></i>&nbsp;02.12.2021</p>
-                                </div>
-                            </div>
-                            <div class="row row-cols-2 d-flex flex-row flex-grow-1 align-items-stretch align-content-stretch align-self-stretch">
-                                <div class="col-auto flex-grow-1 align-items-start">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-users"></i><strong>&nbsp;</strong>3A</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="p-1 m-0"><i class="fas fa-edit"></i>&nbsp;Maths</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;Wielomiany</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-start p-1 m-0"><i class="fas fa-clock" style="font-size: 20px;"></i><strong>&nbsp;</strong>11:30 - 12:15</p>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

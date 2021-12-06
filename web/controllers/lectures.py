@@ -1,7 +1,6 @@
 from flask import jsonify, request, Blueprint, render_template, redirect, session
 from sqlalchemy import func
 from flask.helpers import make_response, url_for
-from sqlalchemy import or_, literal
 from app.models.models import Pupil, Teacher, Frequency, User, Grade, Lesson, Class, db
 
 lectures = Blueprint('lectures', __name__)
@@ -13,7 +12,7 @@ def landing():
     teacher_id = db.session.query(Teacher.id).filter(Teacher.login == session["name"]).first()[0]
     lectures = db.session.query(Lesson, Class, func.count(1).filter(Frequency.frequency > 0))\
         .select_from(Lesson).join(Class, Frequency).filter(Lesson.teacher_id == teacher_id)\
-        .group_by(Lesson, Class).order_by(Lesson.dateOfExecution).limit(3).all()
+        .group_by(Lesson, Class).order_by(Lesson.dateOfExecution.desc()).limit(5).all()
     return render_template('teacher/lectures.html', lectures=lectures, classes=classes, success=success)
 
 @lectures.route('', methods=['POST'])

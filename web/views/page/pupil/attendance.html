@@ -44,40 +44,36 @@
                     <hr style="height: 2px;">
                     <div class="row px-1 mb-4">
                         <div class="col-12">
-                            <p class="text-center px-3 overview-secondary m-0"><strong>Week</strong> 11.10.2021 - 17.10.2021</p>
+                            <p class="text-center px-3 overview-secondary m-0"><strong>Week</strong> {{ date_start.strftime("%d.%m.%Y") }} - {{ date_end.strftime("%d.%m.%Y") }} </p>
                         </div>
-                        <div class="col-1 d-flex justify-content-center align-items-xl-center"><i class="far fa-arrow-alt-circle-left justify-content-center align-items-center text-black-50" style="font-size: 32px;"></i></div>
-                        <div class="col">
-                            <div class="row row-cols-3">
-                                <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;15.10.2021</p>
-                                        </div>
-                                    </div>
-                                    <div class="row text-center flex-column flex-grow-1">
-                                        <div class="col d-flex flex-column justify-content-center"><i class="fas fa-check text-success" style="font-size: 60px;"></i>
-                                            <p class="text-center p-1 m-0 text-success"><strong>All lessons attended</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col d-flex flex-column m-4 p-1 shadow rounded-3">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p class="text-center p-1 m-0"><i class="fas fa-calendar" style="width: 18.003px;"></i>&nbsp;Today</p>
-                                        </div>
-                                    </div>
-                                    <div class="row text-center">
-                                        <div class="col d-flex flex-column justify-content-center"><i class="fas fa-question text-warning" style="font-size: 60px;"></i>
-                                            <p class="text-center p-1 m-0 text-warning"><strong>Absent from lessons:</strong></p>
-                                            <p class="text-center p-1 m-0"><i class="fas fa-clock" style="width: 18.003px;"></i>&nbsp;8:00 - 8:45 | History</p>
-                                            <p class="text-center p-1 m-0">Consult your teacher <br>to resolve this issue</p>
-                                        </div>
-                                    </div>
+                        {% for day in attendance %}
+                        <div class="col-3 m-4 p-1 shadow rounded-3">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="p-1 m-0" style="text-align: center;"><i class="fas fa-calendar"
+                                            style="width: 18.003px;"></i>&nbsp;{{ day.strftime("%d.%m.%Y") }}</p>
                                 </div>
                             </div>
+                            {% for topic, frequency in attendance[day] %}
+                            <div class="row">
+                                <div class="col-auto flex-grow-1 align-items-start">
+                                    <p class="text-start p-1 m-0"><i class="fas fa-chalkboard"></i>&nbsp;{{ topic }}</p>
+                                </div>
+                                <div class="col-auto flex-grow-1 align-items-end">
+                                    <p class="text-end p-1 m-0">
+                                    {% if frequency == 1 %}
+                                        <i class="fas fa-check text-success" style="font-size: 16px;"></i>
+                                    {% elif frequency == 2 %}
+                                        <i class="fas fa-clock text-warning" style="font-size: 16px;"></i>
+                                    {% else %}
+                                        <i class="fas fa-times-circle text-danger" style="font-size: 16px;"></i>
+                                    {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
-                        <div class="col-1 d-flex justify-content-center align-items-xl-center"><i class="far fa-arrow-alt-circle-right justify-content-center align-items-center" style="font-size: 32px;color: rgba(136,136,136,0.36);"></i></div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

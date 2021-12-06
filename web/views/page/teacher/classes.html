@@ -38,6 +38,31 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-md-8">
+                <div class="d-flex flex-column shadow-lg rounded-3 my-4">
+                    <h2 class="px-3 pt-3" style="margin: 0;">&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;Classes</h2>
+                    <hr style="height: 2px;">
+                    <div class="row px-1">
+                        {% for name in classes %}
+                            <div class="col-3 m-4 p-1 shadow rounded-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0" style="text-align: center;"><i class="fas fa-calendar"
+                                                style="width: 18.003px;"></i>&nbsp;{{ name }} <span class="text-black-50" >({{ classes[name] | length }})</span> </p>
+                                    </div>
+                                </div>
+                                {% for pupil in classes[name] %}
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="p-1 m-0"><i class="fas fa-user"></i>&nbsp;{{ pupil.name }} {{ pupil.surname}}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}   
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
