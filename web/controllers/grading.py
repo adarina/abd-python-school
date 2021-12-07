@@ -44,7 +44,7 @@ def add_grade(success=False):
         .update({ListOfGrades.average: average})
 
     db.session.commit()
-    return make_response(jsonify({'message': 'Created'}), 200)
+    return make_response(redirect(url_for("grading.landing", success=True)))
     
 @grading.route('/update', methods=['POST'])
 def update():
@@ -74,7 +74,7 @@ def update():
 
     db.session.commit()
         
-    return make_response(jsonify({'message': 'Updated'}), 200)
+    return make_response(redirect(url_for("grading.landing", success=True)))
 
 @grading.route('/delete/<gradeId>', methods=['DELETE'])
 def delete(gradeId):
@@ -95,4 +95,4 @@ def delete(gradeId):
 
     db.session.commit()
         
-    return make_response(jsonify({'message': 'Deleted'}), 200)
+    return make_response(redirect(url_for("grading.landing", success=True)))

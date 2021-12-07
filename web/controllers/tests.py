@@ -26,7 +26,7 @@ def select(success=False):
         truncate()
 
         with Timer('Generate first orm') as t:
-            for i in range(1000):
+            for i in range(100):
                 user_id = (db.session.query(
                     func.max(User.id)).scalar() or 0) + 1
                 class_name = db.session.query(
@@ -64,7 +64,7 @@ def select(success=False):
                 db.session.add(listOfGrades)
                 db.session.commit()
 
-            for i in range(100):
+            for i in range(10):
                 user_id = (db.session.query(
                     func.max(User.id)).scalar() or 0) + 1
                 db.session.add(Teacher(
@@ -120,7 +120,7 @@ def select(success=False):
         with Timer('Generate first sql') as t:
 
             pupils_values = []
-            for i in range(1000):
+            for i in range(100):
                 get_class = db.session.execute(
                     "SELECT name FROM class ORDER BY RANDOM() LIMIT 1").first()
 
@@ -184,7 +184,7 @@ def select(success=False):
                
 
             teachers_values = []
-            for i in range(100):
+            for i in range(10):
                 teachers_values.append(
                     "('%s', '%s', '%s', '%s', '%i')" % (
                         random.choice(string.ascii_uppercase),
