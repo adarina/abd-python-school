@@ -255,12 +255,8 @@ def select(success=False):
 
     elif request.form['action'] == 'Second_orm':
         with Timer('Generate second orm') as t:
-            class_ = db.session.query(Class.name).join(Lesson).filter(Lesson.dateOfExecution == '2021-12-07')\
-                .filter(Lesson.topic == "CHEMISTRY").all()
-            for cl in class_:
-                pupils = db.session.query(Pupil).filter(Pupil.class_name == cl.name).all()
-            for pup in pupils:
-                grades = db.session.query(Grade).filter(Grade.evaluated == pup.id).all()
+            average = db.session.query(Class.name, func.avg(Grade.grade)).select_from(Lesson).join(Frequency, Pupil, ListOfGrades, Grade).outerjoin(Class, Class.name == Pupil.class_name).filter(Lesson.dateOfExecution == '2021-12-07', Lesson.topic == 'CHEMISTRY', Grade.date == '2021-12-07', Grade.subject == 'CHEMISTRY' ).group_by(Class.name).order_by(Class.name.asc()).all()
+            print(average)
 
     elif request.form['action'] == 'Second_sql':
         
