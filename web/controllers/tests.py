@@ -259,9 +259,17 @@ def select(success=False):
             print(average)
 
     elif request.form['action'] == 'Second_sql':
-        
-        print("#TODO")
-
+        with Timer('Generate second sql') as t:
+            average = db.session.execute("""SELECT class.name, avg(grade.grade)
+                                FROM lesson 
+                                JOIN frequency ON lesson.id = frequency.lesson_id 
+                                JOIN pupil ON pupil.id = frequency.pupil_id 
+                                JOIN listofgrades ON pupil.id = listofgrades.pupil_id 
+                                JOIN grade ON listofgrades.id = grade.listofgrades_id 
+                                JOIN class ON class.name = pupil.class_name
+                                WHERE lesson."dateOfExecution" = '2021-12-07' AND lesson.topic = 'CHEMISTRY' AND grade.date = '2021-12-07' AND grade.subject = 'CHEMISTRY'
+                                GROUP BY class.name ORDER BY class.name ASC""").fetchall()
+            print(average)
  
 
     return make_response(redirect(url_for('tests.landing', success=True)))
