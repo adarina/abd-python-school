@@ -269,5 +269,3 @@ def select(success=False):
  
 
     return make_response(redirect(url_for('tests.landing', success=True)))
-
-
