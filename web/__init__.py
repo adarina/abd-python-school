@@ -29,6 +29,7 @@ from .controllers.your_performance import your_performance
 from .controllers.classes import classes
 from .controllers.grading import grading
 from .controllers.lectures import lectures
+from .controllers.tests import tests
 
 # from .controllers.apple import apple
 # app.register_blueprint(index, url_prefix="/")
@@ -42,6 +43,7 @@ app.register_blueprint(your_performance, url_prefix="/your_performance")
 app.register_blueprint(classes, url_prefix="/classes")
 app.register_blueprint(grading, url_prefix="/grading")
 app.register_blueprint(lectures, url_prefix="/lectures")
+app.register_blueprint(tests, url_prefix="/tests")
 # app.register_blueprint(apple, url_prefix="/apple")
 #migrate = Migrate(app, db)
 

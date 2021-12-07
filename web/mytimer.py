@@ -2,6 +2,8 @@ import time
 
 
 class Timer:
+
+    
     def __init__(self, name=None):
         self.name = name
 
@@ -13,3 +15,5 @@ class Timer:
         self.end = time.perf_counter()
         self.interval = self.end - self.start
         print(f'----{self.name}---- \n time {self.interval}')
+       
+

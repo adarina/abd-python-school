@@ -43,7 +43,7 @@ class Teacher(User):
         self.room = room
 
 class Pupil(User):
-    __tablename__ = "pupil"
+    __tablename__ = 'pupil'
     
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(128), nullable=False)

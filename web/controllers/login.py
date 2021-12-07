@@ -44,4 +44,4 @@ def log_in(success=False):
 def log_out():
     session["name"] = None
     print("here")
-    return redirect(url_for('/login'))    
+    return redirect(url_for('/login'))
